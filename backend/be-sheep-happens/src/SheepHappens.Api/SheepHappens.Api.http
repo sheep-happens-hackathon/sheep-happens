@@ -1,0 +1,6 @@
+@SheepHappens.Api_HostAddress = http://localhost:5121
+
+GET {{SheepHappens.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
