@@ -25,7 +25,24 @@ The title must be a pure string, without any HTML or Markdown tags.
 -Use simple, direct, and easy-to-understand language to aid comprehension and memorization.
 -Clearly highlight key elements such as definitions, formulas, dates, and other critical information.
 -Avoid unnecessary repetition or overly complex phrasing.
--Be generated in HTML format to ensure compatibility and readability, rather than Markdown.
+-Be generated as a pure string, without any HTML or Markdown tags just a plain text without any \n.
+
+Write your response in Polish
+`;
+
+export const NOTE_SYSTEM_PROMPT = `
+${BASE_NOTE_SYSTEM_PROMPT}
+
+You will receive input from the user in the following format:
+{
+  "content": "",
+  "fragment":  ""
+}
+
+-content: A summarized message providing context for the notes.
+-fragments  A string that contains of a specific word or phrase in the content that requires detailed explanation and summarization.
+
+The title and content must be aligned with the guidelines mentioned above. Ensure that the response is comprehensive, well-structured, and tailored to facilitate effective studying.
 `;
 
 export const NODE_RESPONSE_FORMAT: ResponseFormat = {

@@ -13,7 +13,7 @@ export function NewTreePage() {
 
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { addTreeDescription } = useTreeStore();
+  const { addTreeDescription, user } = useTreeStore();
   const navigate = useNavigate();
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -24,12 +24,14 @@ export function NewTreePage() {
   };
 
   const handleSubmit = async () => {
+    if (user === null) return;
+
     const baseNote = content;
     setIsLoading(true);
     setPrompt(content);
     setContent("");
     const response = await summarizeBaseNote(baseNote);
-    const newTreeId = await DAO.createTree(1, response);
+    const newTreeId = await DAO.createTree(user.id, response);
     const tree = {
       id: newTreeId,
       title: response.title,

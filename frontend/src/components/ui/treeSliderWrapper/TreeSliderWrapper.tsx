@@ -8,10 +8,13 @@ export function TreeSliderWrapper() {
   const { setTreeDescriptions, user } = useTreeStore();
 
   useEffect(() => {
-    DAO.getTrees(user.id).then((data) => {
-      console.log('recevied trees', data);
-      setTreeDescriptions(data);
-    });
+    if (user !== null) {
+      console.log('getting trees', user);
+      DAO.getTrees(user.id).then((data) => {
+        console.log('recevied trees', data);
+        setTreeDescriptions(data);
+      });
+    }
   }, [setTreeDescriptions, user]);
 
   return (

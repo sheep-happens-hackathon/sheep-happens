@@ -3,6 +3,7 @@ import {
   BASE_NOTE_SYSTEM_PROMPT,
   NODE_RESPONSE_FORMAT,
   NodeResponse,
+  NOTE_SYSTEM_PROMPT,
 } from './options';
 
 export function summarizeBaseNote(baseNote: string) {
@@ -12,5 +13,25 @@ export function summarizeBaseNote(baseNote: string) {
       { role: 'user', content: baseNote },
     ],
     NODE_RESPONSE_FORMAT
+  );
+}
+
+export function extendNoteFragments(currentNote: string, fragments: string[]) {
+  return Promise.all(
+    fragments.map((fragment) =>
+      makeQuery<NodeResponse>(
+        [
+          { role: 'system', content: NOTE_SYSTEM_PROMPT },
+          {
+            role: 'user',
+            content: JSON.stringify({
+              content: currentNote,
+              fragment,
+            }),
+          },
+        ],
+        NODE_RESPONSE_FORMAT
+      )
+    )
   );
 }

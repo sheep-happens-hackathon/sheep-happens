@@ -10,6 +10,11 @@ export async function makeQuery<T>(
     model: MODEL,
     messages,
     response_format: responseFormat,
+    temperature: 0.4,
+    max_completion_tokens: 2048,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
   });
   const content = completion.choices[0].message.content;
   if (content === null) {

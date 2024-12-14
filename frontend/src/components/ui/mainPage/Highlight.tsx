@@ -1,5 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Button } from "../button";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
+import { Button } from '../button';
 import {
   LeafIcon,
   MinusIcon,
@@ -8,9 +14,21 @@ import {
   RotateCcwIcon,
   SendIcon,
   XIcon,
-} from "lucide-react";
-import { Input } from "../input";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+} from 'lucide-react';
+import { Input } from '../input';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip';
+import { extendNoteFragments } from '@/api/ai/queries';
+import { useTreeStore } from '@/stores/tree-store';
+import { useParams } from 'react-router';
+import { DAO } from '@/repositories/DAO';
+import { Node } from '@/types/types';
+
+function convertHighlightToPhrase(
+  fullText: string,
+  highlight: Highlight
+): string {
+  return fullText.slice(highlight.start, highlight.end);
+}
 
 interface Highlight {
   start: number;
@@ -30,6 +48,31 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
   const [renderedText, setRenderedText] = useState<string>(text);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const [retryInputShowed, setRetryInputShowed] = useState(false);
+  const { addNodes, setNodes } = useTreeStore();
+  const { treeId, nodeId } = useParams();
+
+  useEffect(() => {
+    setHighlights([]);
+    setUserSelection(null);
+  }, [text]);
+
+  const generate = useCallback(async () => {
+    if (nodeId === undefined) return;
+    const phrases = highlights.map((h) => convertHighlightToPhrase(text, h));
+    console.log('chat gpt phrases', phrases);
+    const response = await extendNoteFragments(text, phrases);
+    console.log('chat gpt response', response);
+    const treeIdNum = parseInt(treeId!);
+    const newNodes: Omit<Node, 'id'>[] = response.map((node) => ({
+      title: node.title,
+      content: node.content,
+      treeId: treeIdNum,
+      parentId: parseInt(nodeId!),
+      isFinal: false,
+    }));
+    await DAO.createNode(treeIdNum, newNodes);
+    await DAO.getNodes(parseInt(treeId as string)).then(setNodes);
+  }, [highlights, text, nodeId, setNodes, treeId]);
 
   // Function to get the current user selection
   const handleMouseUp = () => {
@@ -49,7 +92,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
         setUserSelection({
           start: startOffset,
           end: endOffset,
-          id: "user-selection",
+          id: 'user-selection',
         });
       }
     }
@@ -115,7 +158,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
 
   // Update rendered text with highlights
   const updateRenderedText = (highlights: Highlight[]) => {
-    let updatedText = "";
+    let updatedText = '';
     let lastIndex = 0;
 
     highlights.forEach((highlight) => {
@@ -137,26 +180,26 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
   };
 
   return (
-    <div className="flex flex-col p-2">
-      <div className="flex flex-row">
+    <div className='flex flex-col p-2'>
+      <div className='flex flex-row'>
         <div
           ref={textContainerRef}
           onMouseUp={handleMouseUp}
           dangerouslySetInnerHTML={{ __html: renderedText }}
           style={{
-            whiteSpace: "pre-wrap",
-            cursor: "text",
-            userSelect: "text",
+            whiteSpace: 'pre-wrap',
+            cursor: 'text',
+            userSelect: 'text',
           }}
-          className="flex-1"
+          className='flex-1'
         ></div>
-        <div className="flex flex-col justify-self-center self-center ml-3">
-          <div className=" pb-3">
+        <div className='flex flex-col justify-self-center self-center ml-3'>
+          <div className=' pb-3'>
             <Tooltip>
               <TooltipTrigger asChild>
                 <PlusIcon
-                  color="#F0B000"
-                  cursor={"pointer"}
+                  color='#F0B000'
+                  cursor={'pointer'}
                   onClick={addHighlight}
                 />
               </TooltipTrigger>
@@ -165,12 +208,12 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
               </TooltipContent>
             </Tooltip>
           </div>
-          <div className=" pb-3">
+          <div className=' pb-3'>
             <Tooltip>
               <TooltipTrigger asChild>
                 <MinusIcon
-                  color="#FE4E00"
-                  cursor={"pointer"}
+                  color='#FE4E00'
+                  cursor={'pointer'}
                   onClick={removeHighlight}
                 />
               </TooltipTrigger>
@@ -179,12 +222,12 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
               </TooltipContent>
             </Tooltip>
           </div>
-          <div className=" pb-3">
+          <div className=' pb-3'>
             <Tooltip>
               <TooltipTrigger asChild>
                 <RotateCcwIcon
-                  color="#FE4E00"
-                  cursor={"pointer"}
+                  color='#FE4E00'
+                  cursor={'pointer'}
                   onClick={() => setRetryInputShowed(true)}
                 />
               </TooltipTrigger>
@@ -193,14 +236,14 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
               </TooltipContent>
             </Tooltip>
           </div>
-          <div className=" pb-3">
+          <div className=' pb-3'>
             <Tooltip>
               <TooltipTrigger asChild>
                 <NetworkIcon
-                  color="#20A39E"
-                  cursor={"pointer"}
+                  color='#20A39E'
+                  cursor={'pointer'}
                   onClick={() => {
-                    console.log("");
+                    console.log('');
                   }}
                 />
               </TooltipTrigger>
@@ -213,10 +256,10 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <LeafIcon
-                  color="#20A39E"
-                  cursor={"pointer"}
+                  color='#20A39E'
+                  cursor={'pointer'}
                   onClick={() => {
-                    console.log("");
+                    console.log('');
                   }}
                 />
               </TooltipTrigger>
@@ -229,20 +272,20 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
       </div>
 
       {retryInputShowed && (
-        <div className="flex flex-row mt-3">
+        <div className='flex flex-row mt-3'>
           <Button
-            type="submit"
-            className="bg-primary hover:bg-secondary"
+            type='submit'
+            className='bg-primary hover:bg-secondary'
             onClick={() => setRetryInputShowed(false)}
           >
             <XIcon />
           </Button>
           <Input
-            type="text"
-            placeholder="Co chciałbyś zmienić?"
-            className="mx-2"
+            type='text'
+            placeholder='Co chciałbyś zmienić?'
+            className='mx-2'
           />
-          <Button type="submit" className="bg-primary hover:bg-secondary">
+          <Button type='submit' className='bg-primary hover:bg-secondary'>
             <SendIcon />
           </Button>
         </div>

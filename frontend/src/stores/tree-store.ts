@@ -8,12 +8,13 @@ type User = {
 };
 
 type TreeState = {
-  user: User;
+  user: User | null;
   setUser: (user: User) => void;
   treeDescriptions: TreeDescription[];
   setTreeDescriptions: (treeDescriptions: TreeDescription[]) => void;
   nodes: Node[];
   setNodes: (nodeInputs: Node[]) => void;
+  addNodes: (nodeInputs: Node[]) => void;
   addTreeDescription: (treeDescription: TreeDescription) => void;
 };
 
@@ -21,7 +22,7 @@ export const useTreeStore = create<TreeState>()(
   devtools(
     // persist(
     (set) => ({
-      user: { id: 1, username: 'demo' },
+      user: null,
       setUser: (user) => set({ user }),
       treeDescriptions: [],
       setTreeDescriptions: (treeDescriptions) => set({ treeDescriptions }),
@@ -31,6 +32,8 @@ export const useTreeStore = create<TreeState>()(
         set((state) => ({
           treeDescriptions: [...state.treeDescriptions, treeDescription],
         })),
+      addNodes: (nodeInputs) =>
+        set((state) => ({ nodes: [...state.nodes, ...nodeInputs] })),
     })
     // ),
     // { name: 'tree-store' }

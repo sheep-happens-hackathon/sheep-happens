@@ -1,13 +1,12 @@
-import { DAO } from "@/repositories/DAO";
-import { useTreeStore } from "@/stores/tree-store";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { MultiTextHighlighter } from "../mainPage/Highlight";
+import { useTreeStore } from '@/stores/tree-store';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { MultiTextHighlighter } from '../mainPage/Highlight';
 
 export function NodePreview() {
   const { nodeId } = useParams();
   const { nodes } = useTreeStore();
-  const [nodeText, setNodeText] = useState("");
+  const [nodeText, setNodeText] = useState('');
 
   useEffect(() => {
     if (nodeId === undefined) return;
@@ -19,7 +18,7 @@ export function NodePreview() {
   }, [nodeId, nodes]);
 
   return (
-    <div className="m-2 mt-12">
+    <div className='m-2 mt-12'>
       <MultiTextHighlighter text={nodeText} />
     </div>
   );
