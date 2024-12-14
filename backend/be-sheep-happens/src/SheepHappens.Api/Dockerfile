@@ -15,11 +15,11 @@ COPY . .
 WORKDIR "./backend/be-sheep-happens/src/SheepHappens.Api"
 RUN dotnet tool install --global dotnet-ef 
 CMD dotnet ef database update
-RUN dotnet build "./backend/be-sheep-happens/SheepHappens.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./backend/be-sheep-happens/src/SheepHappens.Api/SheepHappens.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./backend/be-sheep-happens/SheepHappens.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./backend/be-sheep-happens/src/SheepHappens.Api/SheepHappens.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
