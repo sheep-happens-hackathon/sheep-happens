@@ -18,5 +18,5 @@ export interface IDAO {
     tree: Omit<TreeDescription, 'id'>
   ): Promise<number>;
 
-  createNode(node: Omit<Node, 'id'>): Promise<void>;
+  createNode(treeId: number, nodes: Omit<Node, 'id'>[]): Promise<void>;
 }

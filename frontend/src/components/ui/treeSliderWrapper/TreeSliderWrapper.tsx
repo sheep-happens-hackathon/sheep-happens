@@ -5,11 +5,14 @@ import { useTreeStore } from '@/stores/tree-store';
 import { DAO } from '@/repositories/DAO';
 
 export function TreeSliderWrapper() {
-  const { setTreeDescriptions } = useTreeStore();
+  const { setTreeDescriptions, user } = useTreeStore();
 
   useEffect(() => {
-    DAO.getTrees(1).then(setTreeDescriptions);
-  }, [setTreeDescriptions]);
+    DAO.getTrees(user.id).then((data) => {
+      console.log('recevied trees', data);
+      setTreeDescriptions(data);
+    });
+  }, [setTreeDescriptions, user]);
 
   return (
     <div className='min-h-screen relative'>
