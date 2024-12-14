@@ -1,31 +1,9 @@
-import { MarkerType } from "@xyflow/react";
-
-export type NodeInput = {
+export type Node = {
   parentId: number | null;
   id: number;
   title: string;
   isFinal: boolean;
   content: string;
-};
-
-export type NodeOutput = {
-  id: string;
-  type?: string;
-  data: { label: string };
-  position: { x: number; y: number };
-  style: {};
-};
-
-export type EdgeOutput = {
-  id: string;
-  source: string;
-  target: string;
-  markerEnd: {
-    type: MarkerType;
-    width: number;
-    height: number;
-    color: string;
-  };
 };
 
 export type Chat = {
