@@ -11,7 +11,7 @@ export function LoginPage() {
   const onLogin = async (userCredentials: UserCredentials) => {
     const userId = await DAO.getUser(userCredentials.username);
     setUser({ id: userId, username: userCredentials.username });
-    navigate('/trees');
+    navigate('/trees/new');
   };
 
   return (

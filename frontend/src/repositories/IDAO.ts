@@ -1,4 +1,4 @@
-import { NodeInput, TreeDescription } from "@/types/types";
+import { Node, TreeDescription } from '@/types/types';
 
 export interface IDAO {
   /**
@@ -8,5 +8,15 @@ export interface IDAO {
 
   getTrees(userId: number): Promise<TreeDescription[]>;
 
-  getNodes(treeId: number): Promise<NodeInput[]>;
+  getNodes(treeId: number): Promise<Node[]>;
+
+  /**
+   * Returns new tree id.
+   */
+  createTree(
+    userId: number,
+    tree: Omit<TreeDescription, 'id'>
+  ): Promise<number>;
+
+  createNode(node: Omit<Node, 'id'>): Promise<void>;
 }

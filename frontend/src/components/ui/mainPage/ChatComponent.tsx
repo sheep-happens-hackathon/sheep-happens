@@ -1,7 +1,4 @@
-import { Chat, NodeInput } from "@/types/types";
-import { useEffect, useState } from "react";
-import LearningChart from "./LearningChart";
-import { LeftSheet } from "./LeftSheet";
+import { useState } from "react";
 import { Textarea } from "../textarea";
 import { PlusIcon, SendIcon, ThumbsDownIcon } from "lucide-react";
 import { Input } from "../input";
