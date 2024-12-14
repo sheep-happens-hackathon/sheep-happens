@@ -16,6 +16,8 @@ import "@xyflow/react/dist/style.css";
 import { initialEdges1, initialNodes1 } from "./nodes-edges";
 import { EdgeOutput, NodeInput, NodeOutput } from "@/types/types";
 import "@xyflow/react/dist/style.css";
+import { useTreeStore } from "@/stores/tree-store";
+import { DAO } from "@/repositories/DAO";
 
 const getLayoutedElements = (nodes: any, edges: any, options: any) => {
   const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
@@ -52,33 +54,36 @@ const getLayoutedElements = (nodes: any, edges: any, options: any) => {
 
 const LearningChart = (props: any) => {
   const { fitView } = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes1);
+  const [nodes1, setNodes1, onNodesChange] = useNodesState(initialNodes1);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges1);
 
   const onNodeClick = (event: any, node: any) => props.onClick(node.id);
+  const { nodes, setNodes } = useTreeStore();
 
   useEffect(() => {
-    const { initialNodes, initialEdges } = transformNodesToGraph(
-      props.nodesProp
-    );
+    DAO.getNodes(1).then(setNodes);
+  }, []);
+
+  useEffect(() => {
+    const { initialNodes, initialEdges } = transformNodesToGraph(nodes);
 
     lol(initialNodes, initialEdges);
-  }, [props.nodesProp]);
+  }, [nodes]);
 
   useEffect(() => {
     console.log("useeffect");
   }, []);
 
   const onLayout = useCallback(() => {
-    lol(nodes, edges);
-  }, [nodes, edges]);
+    lol(nodes1, edges);
+  }, [nodes1, edges]);
 
   useEffect(() => {});
 
   const lol = (nodes: any, edges: any) => {
     const layouted = getLayoutedElements(nodes, edges, "TB");
 
-    setNodes([...layouted.nodes]);
+    setNodes1([...layouted.nodes]);
     setEdges([...layouted.edges]);
 
     window.requestAnimationFrame(() => {
@@ -117,7 +122,7 @@ const LearningChart = (props: any) => {
           type: node.parentId === null ? "input" : undefined,
           data: { label: node.title },
           position,
-          isFinal: node.isFinal,
+          style: { backgroundColor: node.isFinal ? "red" : "dodgerblue" },
         });
 
         nodePositionMap.set(node.id, position);
@@ -136,7 +141,7 @@ const LearningChart = (props: any) => {
               type: MarkerType.ArrowClosed,
               width: 20,
               height: 20,
-              color: "dodgerblue",
+              color: "white",
             },
           });
         }
@@ -150,7 +155,7 @@ const LearningChart = (props: any) => {
 
   return (
     <ReactFlow
-      nodes={nodes}
+      nodes={nodes1}
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}

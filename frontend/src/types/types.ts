@@ -5,6 +5,7 @@ export type NodeInput = {
   id: number;
   title: string;
   isFinal: boolean;
+  content: string;
 };
 
 export type NodeOutput = {
@@ -12,7 +13,7 @@ export type NodeOutput = {
   type?: string;
   data: { label: string };
   position: { x: number; y: number };
-  isFinal: boolean;
+  style: {};
 };
 
 export type EdgeOutput = {
@@ -30,4 +31,9 @@ export type EdgeOutput = {
 export type Chat = {
   chatId: number;
   chatTitle: string;
+};
+
+export type TreeDescription = {
+  id: number;
+  title: string;
 };
