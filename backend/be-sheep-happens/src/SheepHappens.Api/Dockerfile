@@ -13,7 +13,8 @@ COPY ["./backend/be-sheep-happens/src/SheepHappens.Api/SheepHappens.Api.csproj",
 RUN dotnet restore "./backend/be-sheep-happens/src/SheepHappens.Api/SheepHappens.Api.csproj"
 COPY . .
 WORKDIR "./backend/be-sheep-happens/src/SheepHappens.Api"
-RUN dotnet ef database update
+RUN dotnet tool install --global dotnet-ef 
+CMD dotnet ef database update
 RUN dotnet build "./backend/be-sheep-happens/SheepHappens.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
