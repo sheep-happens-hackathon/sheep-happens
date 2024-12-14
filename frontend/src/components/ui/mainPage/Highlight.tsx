@@ -3,6 +3,7 @@ import { Button } from "../button";
 import {
   MinusIcon,
   NetworkIcon,
+  OctagonMinus,
   PlusIcon,
   RotateCcwIcon,
   SendIcon,
@@ -146,6 +147,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             cursor: "text",
             userSelect: "text",
           }}
+          className="flex-1"
         ></div>
         <div className="flex flex-col justify-self-center self-center ml-3">
           <div className=" pb-3">
@@ -180,7 +182,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <RotateCcwIcon
-                  color="red"
+                  color="blue"
                   cursor={"pointer"}
                   onClick={() => setRetryInputShowed(true)}
                 />
@@ -190,11 +192,27 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
               </TooltipContent>
             </Tooltip>
           </div>
-          <div>
+          <div className=" pb-3">
             <Tooltip>
               <TooltipTrigger asChild>
                 <NetworkIcon
                   color="blue"
+                  cursor={"pointer"}
+                  onClick={() => {
+                    console.log("");
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Utwórz kolejne zapytanie na podstawie zaznaczeń</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <OctagonMinus
+                  color="red"
                   cursor={"pointer"}
                   onClick={() => {
                     console.log("");
