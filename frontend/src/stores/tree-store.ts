@@ -14,20 +14,25 @@ type TreeState = {
   setTreeDescriptions: (treeDescriptions: TreeDescription[]) => void;
   nodes: Node[];
   setNodes: (nodeInputs: Node[]) => void;
+  addTreeDescription: (treeDescription: TreeDescription) => void;
 };
 
 export const useTreeStore = create<TreeState>()(
   devtools(
-    persist(
-      (set) => ({
-        user: { id: 1, username: 'demo' },
-        setUser: (user) => set({ user }),
-        treeDescriptions: [],
-        setTreeDescriptions: (treeDescriptions) => set({ treeDescriptions }),
-        nodes: [],
-        setNodes: (nodes) => set({ nodes }),
-      }),
-      { name: 'tree-store' }
-    )
+    // persist(
+    (set) => ({
+      user: { id: 1, username: 'demo' },
+      setUser: (user) => set({ user }),
+      treeDescriptions: [],
+      setTreeDescriptions: (treeDescriptions) => set({ treeDescriptions }),
+      nodes: [],
+      setNodes: (nodes) => set({ nodes }),
+      addTreeDescription: (treeDescription) =>
+        set((state) => ({
+          treeDescriptions: [...state.treeDescriptions, treeDescription],
+        })),
+    })
+    // ),
+    // { name: 'tree-store' }
   )
 );

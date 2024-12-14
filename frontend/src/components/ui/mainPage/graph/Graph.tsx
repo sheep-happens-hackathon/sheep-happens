@@ -1,5 +1,4 @@
 import {
-  Panel,
   ReactFlow,
   useEdgesState,
   useNodesState,
@@ -7,7 +6,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useGraphData } from './useGraphData';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getLayoutedElements } from './getLayoutedElements';
 
 export function Graph() {
@@ -15,11 +14,13 @@ export function Graph() {
   const { edges: initialEdges, nodes: initialNodes } = useGraphData();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [key, setKey] = useState(0);
 
   const onLayout = useCallback(
     (direction: string) => {
-      console.log(nodes);
+      console.log('in layout nodes', initialNodes);
       const layouted = getLayoutedElements(nodes, edges, direction);
+      console.log('in layouted layouted nodes', [...layouted.nodes]);
 
       setNodes([...layouted.nodes]);
       setEdges([...layouted.edges]);
@@ -28,12 +29,26 @@ export function Graph() {
         fitView();
       });
     },
-    [nodes, edges, fitView, setNodes, setEdges]
+    [nodes, edges, initialEdges, initialNodes]
   );
 
   useEffect(() => {
+    console.log('nodes', initialNodes, nodes);
+  }, [initialNodes, edges]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setKey((prevKey) => prevKey + 1);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [initialEdges, initialNodes]);
+
+  useEffect(() => {
     onLayout('TB');
-  }, [onLayout]);
+  }, [key]);
 
   return (
     <ReactFlow

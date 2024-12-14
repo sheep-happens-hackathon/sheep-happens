@@ -14,4 +14,5 @@ export type Chat = {
 export type TreeDescription = {
   id: number;
   title: string;
+  content: string;
 };

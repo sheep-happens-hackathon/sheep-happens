@@ -6,9 +6,11 @@ export const getLayoutedElements = (
   edges: Edge[],
   direction: string
 ) => {
+  console.log('aaaaaaaaaaaaaaaaaa nodes', nodes);
   const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
   g.setGraph({ rankdir: direction });
 
+  console.log('bbbbbbbbbbbb nodes', nodes);
   edges.forEach((edge) => g.setEdge(edge.source, edge.target));
   nodes.forEach((node) =>
     g.setNode(node.id, {
@@ -19,7 +21,6 @@ export const getLayoutedElements = (
   );
 
   Dagre.layout(g);
-
   return {
     nodes: nodes.map((node) => {
       const position = g.node(node.id);
