@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SheepHappens.Api.UseCases.Trees.Commands.AddTree;
 using SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId;
 
 namespace SheepHappens.Api.Controllers
@@ -20,6 +21,12 @@ namespace SheepHappens.Api.Controllers
             var query = new GetTreeDetailsByTreeIdUseCase.Query(id);
             var treeDetails = await mediator.Send(query, cancellationToken);
             return Ok(treeDetails);
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddTree([FromBody] AddTreeUseCase.Command command, CancellationToken cancellationToken)
+        {
+            await mediator.Send(command, cancellationToken);
+            return Ok();
         }
     }
 }
