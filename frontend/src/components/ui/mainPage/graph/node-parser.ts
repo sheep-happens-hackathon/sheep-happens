@@ -1,5 +1,5 @@
-import { Node as RawNode } from '@/types/types';
-import { MarkerType, Node, Edge } from '@xyflow/react';
+import { Node as RawNode } from "@/types/types";
+import { MarkerType, Node, Edge } from "@xyflow/react";
 
 export const parseNodes = (
   rawNodes: RawNode[]
@@ -18,11 +18,11 @@ export const parseNodes = (
   ];
 
   nodes.push({
-    id: '0',
-    type: 'input',
-    data: { label: 'Oryginalna notatka' },
+    id: "0",
+    type: "input",
+    data: { label: "Oryginalna notatka" },
     position: { x: 0, y: -100 },
-    style: { backgroundColor: 'green' },
+    style: { backgroundColor: "#7D3F9F", borderRadius: 15 },
   });
 
   let i = 0;
@@ -32,7 +32,10 @@ export const parseNodes = (
       id: nodeId,
       data: { label: rawNode.title },
       position: { x: cords[i]![0]!, y: cords[i]![1]! },
-      style: { backgroundColor: rawNode.isFinal ? 'red' : 'dodgerblue' },
+      style: {
+        backgroundColor: rawNode.isFinal ? "#FE4E00" : "#F0B000",
+        borderRadius: 15,
+      },
     });
     i++;
   }
@@ -42,13 +45,13 @@ export const parseNodes = (
       const edgeId = `e0${node.id}`;
       edges.push({
         id: edgeId,
-        source: '0',
+        source: "0",
         target: node.id.toString(),
         markerEnd: {
           type: MarkerType.ArrowClosed,
           width: 20,
           height: 20,
-          color: 'dodgerblue',
+          color: "#F0B000",
         },
       });
       continue;
@@ -63,7 +66,7 @@ export const parseNodes = (
         type: MarkerType.ArrowClosed,
         width: 20,
         height: 20,
-        color: 'dodgerblue',
+        color: "#F0B000",
       },
     });
   }

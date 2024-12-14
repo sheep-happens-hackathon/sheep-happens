@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetClose,
@@ -6,12 +6,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { useTreeStore } from '@/stores/tree-store';
-import { FolderOpenIcon } from 'lucide-react';
-import { useNavigate } from 'react-router';
+} from "@/components/ui/sheet";
+import { useTreeStore } from "@/stores/tree-store";
+import { FolderOpenIcon } from "lucide-react";
+import { useNavigate } from "react-router";
 
-const side = 'left';
+const side = "left";
 
 export function LeftSheet() {
   const { treeDescriptions } = useTreeStore();
@@ -22,24 +22,26 @@ export function LeftSheet() {
   };
 
   return (
-    <div className='grid grid-cols-2 gap-2 p-2'>
+    <div className="grid grid-cols-2 gap-2 p-2">
       <Sheet key={side}>
         <SheetTrigger asChild>
-          <FolderOpenIcon cursor={'pointer'} />
+          <FolderOpenIcon cursor={"pointer"} />
         </SheetTrigger>
         <SheetContent side={side}>
           <SheetHeader>
             <SheetTitle>Twoje drzewa</SheetTitle>
           </SheetHeader>
-          <div className='grid gap-4 py-4'>
+          <div className="grid gap-4 py-4">
             {treeDescriptions.map((treeDescription) => {
               return (
                 <SheetClose asChild key={treeDescription.id}>
                   <Button
-                    variant='outline'
+                    variant="outline"
                     onClick={() => handleTreeClick(treeDescription.id)}
                   >
-                    {treeDescription.title}
+                    {treeDescription.title.length < 40
+                      ? treeDescription.title
+                      : treeDescription.title.slice(0, 37) + "..."}
                   </Button>
                 </SheetClose>
               );

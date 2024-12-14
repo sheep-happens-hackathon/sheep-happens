@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../button";
 import {
+  LeafIcon,
   MinusIcon,
   NetworkIcon,
-  OctagonMinus,
   PlusIcon,
   RotateCcwIcon,
   SendIcon,
-  ThumbsDownIcon,
   XIcon,
 } from "lucide-react";
 import { Input } from "../input";
@@ -57,6 +56,8 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
   };
 
   useEffect(() => {
+    setHighlights([]);
+    setRenderedText(text);
     updateRenderedText(highlights);
   }, [text]);
 
@@ -122,7 +123,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
         updatedText += text.slice(lastIndex, highlight.start);
       }
       updatedText +=
-        `<span style="background-color: yellow;">` +
+        `<span style="background-color: #7D3F9F ;">` +
         text.slice(highlight.start, highlight.end) +
         `</span>`;
       lastIndex = highlight.end;
@@ -154,7 +155,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <PlusIcon
-                  color="green"
+                  color="#F0B000"
                   cursor={"pointer"}
                   onClick={addHighlight}
                 />
@@ -168,7 +169,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <MinusIcon
-                  color="red"
+                  color="#FE4E00"
                   cursor={"pointer"}
                   onClick={removeHighlight}
                 />
@@ -182,7 +183,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <RotateCcwIcon
-                  color="blue"
+                  color="#FE4E00"
                   cursor={"pointer"}
                   onClick={() => setRetryInputShowed(true)}
                 />
@@ -196,7 +197,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <NetworkIcon
-                  color="blue"
+                  color="#20A39E"
                   cursor={"pointer"}
                   onClick={() => {
                     console.log("");
@@ -211,8 +212,8 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
           <div>
             <Tooltip>
               <TooltipTrigger asChild>
-                <OctagonMinus
-                  color="red"
+                <LeafIcon
+                  color="#20A39E"
                   cursor={"pointer"}
                   onClick={() => {
                     console.log("");
@@ -220,7 +221,7 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
                 />
               </TooltipTrigger>
               <TooltipContent>
-                <p>Utwórz kolejne zapytanie na podstawie zaznaczeń</p>
+                <p>Zakończ wątek i stwórz fiszki</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -231,13 +232,17 @@ export const MultiTextHighlighter: React.FC<MultiTextHighlighterProps> = ({
         <div className="flex flex-row mt-3">
           <Button
             type="submit"
-            className=""
+            className="bg-primary hover:bg-secondary"
             onClick={() => setRetryInputShowed(false)}
           >
             <XIcon />
           </Button>
-          <Input type="text" placeholder="prompt" className="mx-2" />
-          <Button type="submit" className="">
+          <Input
+            type="text"
+            placeholder="Co chciałbyś zmienić?"
+            className="mx-2"
+          />
+          <Button type="submit" className="bg-primary hover:bg-secondary">
             <SendIcon />
           </Button>
         </div>
