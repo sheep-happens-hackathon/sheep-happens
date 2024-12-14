@@ -10,19 +10,49 @@ export const parseNodes = (
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
+  const cords = [
+    [0, 0],
+    [-100, 100],
+    [-100, 200],
+    [100, 200],
+  ];
+
+  nodes.push({
+    id: '0',
+    type: 'input',
+    data: { label: 'Oryginalna notatka' },
+    position: { x: 0, y: -100 },
+    style: { backgroundColor: 'green' },
+  });
+
+  let i = 0;
   for (const rawNode of rawNodes) {
     const nodeId = rawNode.id.toString();
     nodes.push({
       id: nodeId,
-      type: rawNode.parentId === null ? 'input' : undefined,
       data: { label: rawNode.title },
-      position: { x: 0, y: 0 },
+      position: { x: cords[i]![0]!, y: cords[i]![1]! },
       style: { backgroundColor: rawNode.isFinal ? 'red' : 'dodgerblue' },
     });
+    i++;
   }
 
   for (const node of rawNodes) {
-    if (node.parentId === null) continue;
+    if (node.parentId === null) {
+      const edgeId = `e0${node.id}`;
+      edges.push({
+        id: edgeId,
+        source: '0',
+        target: node.id.toString(),
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 20,
+          height: 20,
+          color: 'dodgerblue',
+        },
+      });
+      continue;
+    }
 
     const edgeId = `e${node.parentId}${node.id}`;
     edges.push({

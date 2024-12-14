@@ -9,7 +9,6 @@ export function TreePageWrapper() {
   const { setNodes } = useTreeStore();
 
   useEffect(() => {
-    console.log('aaaaaaaaaaaaaaa ------------------- ', treeId);
     DAO.getNodes(parseInt(treeId as string)).then(setNodes);
   }, [treeId, setNodes]);
 
