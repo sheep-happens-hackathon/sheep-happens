@@ -6,6 +6,7 @@ import { Textarea } from "../textarea";
 import { PlusIcon, SendIcon, ThumbsDownIcon } from "lucide-react";
 import { Input } from "../input";
 import { Button } from "../button";
+import TextSelectionComponent from "./Highlight";
 
 function ChatComponent() {
   const [questionStage, setQuestionStage] = useState(0);
@@ -28,6 +29,7 @@ function ChatComponent() {
         <div className="grid grid-cols-12">
           <div className="col-span-11 pl-2">
             <Textarea />
+            <TextSelectionComponent text="chujchujchujchujchujchujchujchujchujchujchujchuj" />
           </div>
           <div className="col-span-1 content-around px-1">
             <div className="flex flex-col justify-self-center self-center">
