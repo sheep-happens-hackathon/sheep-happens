@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SheepHappens.Api.UseCases.Nodes.Commands.AddNodes;
+using SheepHappens.Api.UseCases.Nodes.Commands.UpdateNode;
 
 namespace SheepHappens.Api.Controllers
 {
@@ -18,6 +19,12 @@ namespace SheepHappens.Api.Controllers
         public async Task<ActionResult> AddUserNodesByUserId([FromBody] AddNodesUseCase.Command command, CancellationToken cancellationToken)
         {
             await mediator.Send(command, cancellationToken);
+            return Ok();
+        }
+        [HttpPut]
+        public async Task<ActionResult> UpdateNode([FromBody] UpdateNodeUseCase.Command command, CancellationToken cancellation)
+        {
+            await mediator.Send(command, cancellation);
             return Ok();
         }
     }
