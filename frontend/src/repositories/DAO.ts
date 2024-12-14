@@ -1,5 +1,4 @@
-import { DbDAO } from "./DbDAO";
-import { IDAO } from "./IDAO";
-import { MockDAO } from "./MockDAO";
+import { DbDAO } from './DbDAO';
+import { IDAO } from './IDAO';
 
-export const DAO: IDAO = new MockDAO();
+export const DAO: IDAO = new DbDAO();

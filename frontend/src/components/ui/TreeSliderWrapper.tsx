@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router';
-import { LeftSheet } from '../mainPage/LeftSheet';
 import { useEffect } from 'react';
 import { useTreeStore } from '@/stores/tree-store';
 import { DAO } from '@/repositories/DAO';
+import { LeftSheet } from './LeftSheet';
 
 export function TreeSliderWrapper() {
   const { setTreeDescriptions, user } = useTreeStore();

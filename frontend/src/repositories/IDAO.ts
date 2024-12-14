@@ -1,5 +1,11 @@
 import { Node, TreeDescription } from '@/types/types';
 
+export type NodeUpdateDto = {
+  nodeId: number;
+  content: string;
+  isFinal?: boolean;
+};
+
 export interface IDAO {
   /**
    * Takes username and returns user id.
@@ -19,4 +25,6 @@ export interface IDAO {
   ): Promise<number>;
 
   createNode(treeId: number, nodes: Omit<Node, 'id'>[]): Promise<void>;
+
+  updateNode(dto: NodeUpdateDto): Promise<void>;
 }

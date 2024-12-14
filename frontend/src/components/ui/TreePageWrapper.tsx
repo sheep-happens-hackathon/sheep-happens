@@ -2,7 +2,7 @@ import { Outlet, useParams } from 'react-router';
 import { useEffect } from 'react';
 import { DAO } from '@/repositories/DAO';
 import { useTreeStore } from '@/stores/tree-store';
-import { Graph } from '../mainPage/graph/Graph';
+import { Graph } from './graph/Graph';
 
 export function TreePageWrapper() {
   const { treeId } = useParams();

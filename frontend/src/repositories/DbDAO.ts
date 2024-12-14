@@ -1,5 +1,5 @@
 import { TreeDescription, Node } from '@/types/types';
-import { IDAO } from './IDAO';
+import { IDAO, NodeUpdateDto } from './IDAO';
 import { api } from '@/api/backend/api';
 
 export type DbNode = {
@@ -76,6 +76,16 @@ export class DbDAO implements IDAO {
           treeId,
         })),
       }),
+    });
+  }
+
+  async updateNode(dto: NodeUpdateDto): Promise<void> {
+    await api('nodes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dto),
     });
   }
 }

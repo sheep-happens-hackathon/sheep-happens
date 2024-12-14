@@ -1,5 +1,5 @@
 import { useTreeStore } from '@/stores/tree-store';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 export function TreeDetails() {

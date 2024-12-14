@@ -1,6 +1,6 @@
 import { Node, TreeDescription } from '@/types/types';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 
 type User = {
   id: number;
@@ -16,6 +16,7 @@ type TreeState = {
   setNodes: (nodeInputs: Node[]) => void;
   addNodes: (nodeInputs: Node[]) => void;
   addTreeDescription: (treeDescription: TreeDescription) => void;
+  updateNode: (node: Node) => void;
 };
 
 export const useTreeStore = create<TreeState>()(
@@ -34,6 +35,14 @@ export const useTreeStore = create<TreeState>()(
         })),
       addNodes: (nodeInputs) =>
         set((state) => ({ nodes: [...state.nodes, ...nodeInputs] })),
+      updateNode: (node) => {
+        set((state) => {
+          const nodes = state.nodes.map((n) =>
+            n.id === node.id ? { ...n, ...node } : n
+          );
+          return { nodes };
+        });
+      },
     })
     // ),
     // { name: 'tree-store' }

@@ -35,3 +35,14 @@ export function extendNoteFragments(currentNote: string, fragments: string[]) {
     )
   );
 }
+
+export function improveNote(badNote: string, tipFromUser: string) {
+  return makeQuery<NodeResponse>(
+    [
+      { role: 'system', content: BASE_NOTE_SYSTEM_PROMPT },
+      { role: 'assistant', content: badNote },
+      { role: 'user', content: tipFromUser },
+    ],
+    NODE_RESPONSE_FORMAT
+  );
+}

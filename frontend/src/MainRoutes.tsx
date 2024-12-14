@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router';
 import { LoginPage } from './components/ui/loginPage/LoginPage';
-import { NewTreePage } from './components/ui/newTreePage/NewTreePage';
-import { TreePageWrapper } from './components/ui/treePageWrapper/TreePageWrapper';
-import { TreeDetails } from './components/ui/treeDetails/TreeDetails';
+import { TreeDetails } from './components/ui/TreeDetails';
 import { NodePreview } from './components/ui/nodePreview/NodePreview';
-import { TreeSliderWrapper } from './components/ui/treeSliderWrapper/TreeSliderWrapper';
+import { NewTreePage } from './components/ui/NewTreePage';
+import { TreePageWrapper } from './components/ui/TreePageWrapper';
+import { TreeSliderWrapper } from './components/ui/TreeSliderWrapper';
 
 export function MainRoutes() {
   return (
