@@ -33,7 +33,7 @@ namespace SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId
                 });
                 var parentIds = new List<int> { firstNode.Id };
 
-                while(nodesInOrder.Count != nodes.Count)
+                while(nodesInOrder.Count < nodes.Count)
                 {
                     var sameLevelNodes = nodes.Where(x => parentIds.Contains(x.ParentNodeId ?? 0)).OrderBy(x => x.ParentNodeId).ThenBy(x => x.Id).ToList();
                     nodesInOrder.AddRange(sameLevelNodes.ConvertAll(x => new NodeDto
