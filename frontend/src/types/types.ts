@@ -1,3 +1,5 @@
+import { MarkerType } from "@xyflow/react";
+
 export type NodeInput = {
   parentId: number | null;
   id: number;
@@ -10,13 +12,19 @@ export type NodeOutput = {
   type?: string;
   data: { label: string };
   position: { x: number; y: number };
+  isFinal: boolean;
 };
 
 export type EdgeOutput = {
   id: string;
   source: string;
   target: string;
-  animated: boolean;
+  markerEnd: {
+    type: MarkerType;
+    width: number;
+    height: number;
+    color: string;
+  };
 };
 
 export type Chat = {

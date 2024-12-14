@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetContent,
@@ -20,10 +18,10 @@ type LeftSheetInterface = {
 
 export function LeftSheet({ chats, onClick }: LeftSheetInterface) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2 p-2">
       <Sheet key={side}>
         <SheetTrigger asChild>
-          <FolderOpenIcon />
+          <FolderOpenIcon cursor={"pointer"} />
         </SheetTrigger>
         <SheetContent side={side}>
           <SheetHeader>
