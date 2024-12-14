@@ -9,6 +9,7 @@ import {
   useReactFlow,
   Background,
   Controls,
+  MarkerType,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
@@ -54,8 +55,6 @@ const LearningChart = (props: any) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes1);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges1);
 
-  const reactFlowInstance = useReactFlow();
-
   const onNodeClick = (event: any, node: any) => props.onClick(node.id);
 
   useEffect(() => {
@@ -63,26 +62,29 @@ const LearningChart = (props: any) => {
       props.nodesProp
     );
 
-    const layouted = getLayoutedElements(initialNodes, initialEdges, "TB");
+    lol(initialNodes, initialEdges);
+  }, [props.nodesProp]);
+
+  useEffect(() => {
+    console.log("useeffect");
+  }, []);
+
+  const onLayout = useCallback(() => {
+    lol(nodes, edges);
+  }, [nodes, edges]);
+
+  useEffect(() => {});
+
+  const lol = (nodes: any, edges: any) => {
+    const layouted = getLayoutedElements(nodes, edges, "TB");
 
     setNodes([...layouted.nodes]);
     setEdges([...layouted.edges]);
-  }, [props.nodesProp]);
 
-  const onLayout = useCallback(
-    (direction: any) => {
-      console.log(nodes);
-      const layouted = getLayoutedElements(nodes, edges, { direction });
-
-      setNodes([...layouted.nodes]);
-      setEdges([...layouted.edges]);
-
-      window.requestAnimationFrame(() => {
-        fitView();
-      });
-    },
-    [nodes, edges]
-  );
+    window.requestAnimationFrame(() => {
+      fitView();
+    });
+  };
 
   const transformNodesToGraph = useCallback(
     (
@@ -115,6 +117,7 @@ const LearningChart = (props: any) => {
           type: node.parentId === null ? "input" : undefined,
           data: { label: node.title },
           position,
+          isFinal: node.isFinal,
         });
 
         nodePositionMap.set(node.id, position);
@@ -129,10 +132,16 @@ const LearningChart = (props: any) => {
             id: edgeId,
             source: node.parentId.toString(),
             target: node.id.toString(),
-            animated: true,
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 20,
+              height: 20,
+              color: "dodgerblue",
+            },
           });
         }
       }
+      console.log(initialEdges);
 
       return { initialNodes, initialEdges };
     },
@@ -154,8 +163,7 @@ const LearningChart = (props: any) => {
     >
       <Background />
       <Panel position="top-right">
-        <button onClick={() => onLayout("TB")}>vertical layout</button>
-        {/* <button onClick={() => onLayout("LR")}>horizontal layout</button> */}
+        <button onClick={() => onLayout()}>vertical layout</button>
       </Panel>
     </ReactFlow>
   );

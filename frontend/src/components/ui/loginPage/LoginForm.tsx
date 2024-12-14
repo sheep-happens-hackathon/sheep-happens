@@ -1,54 +1,56 @@
-import { useForm } from "react-hook-form";
-import { Button } from "../button";
+import { useForm } from 'react-hook-form';
+import { Button } from '../button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../form";
-import { Input } from "../input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Checkbox } from "../checkbox";
+} from '../form';
+import { Input } from '../input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Checkbox } from '../checkbox';
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z
+    .string()
+    .min(1, { message: 'Nazwa użytkownika nie może być pusta.' }),
+  password: z.string().min(1, {
+    message: 'Hasło nie może być puste.',
   }),
 });
 
-function LoginForm() {
+export type UserCredentials = z.infer<typeof formSchema>;
+
+interface Props {
+  onSubmit: (values: UserCredentials) => void;
+}
+
+function LoginForm({ onSubmit }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: 'demo',
+      password: 'demo',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='space-y-6 w-full flex flex-col max-w-[350px] mx-auto'
+      >
         <FormField
           control={form.control}
-          name="username"
+          name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Nazwa użytkownika</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder='Nazwa użytkownika' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,27 +58,29 @@ function LoginForm() {
         />
         <FormField
           control={form.control}
-          name="password"
+          name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Hasło</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input type='password' placeholder='Hasło' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex items-center space-x-2">
-          <Checkbox id="terms" />
+        <div className='flex items-center space-x-2'>
+          <Checkbox id='terms' />
           <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            htmlFor='terms'
+            className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
           >
-            Remember
+            Zapamiętaj
           </label>
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type='submit' className='self-center px-8'>
+          Zaloguj
+        </Button>
       </form>
     </Form>
   );

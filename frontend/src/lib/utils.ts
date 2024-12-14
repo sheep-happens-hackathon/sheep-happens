@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function getAiSecret() {
   return import.meta.env['VITE_AI_SECRET'];
 }
+
+export async function wait(ms: number = 1000) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
