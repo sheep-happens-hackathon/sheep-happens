@@ -21,7 +21,7 @@ namespace SheepHappens.Api.Persistence.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    login = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
+                    login = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +36,7 @@ namespace SheepHappens.Api.Persistence.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     title = table.Column<string>(type: "text", nullable: false),
+                    content = table.Column<string>(type: "text", nullable: false),
                     user_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

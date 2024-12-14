@@ -24,6 +24,7 @@ namespace SheepHappens.Api.UseCases.Users.Queries.GetUserTreesByUserId
                 {
                     Id = x.Id,
                     Title = x.Title,
+                    Content = x.Content,
                 });
             }
         }

@@ -25,8 +25,8 @@ namespace SheepHappens.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> AddTree([FromBody] AddTreeUseCase.Command command, CancellationToken cancellationToken)
         {
-            await mediator.Send(command, cancellationToken);
-            return Ok();
+            var treeId = await mediator.Send(command, cancellationToken);
+            return Ok(treeId);
         }
     }
 }

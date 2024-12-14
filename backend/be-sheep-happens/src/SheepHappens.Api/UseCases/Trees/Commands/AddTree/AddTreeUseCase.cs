@@ -6,8 +6,8 @@ namespace SheepHappens.Api.UseCases.Trees.Commands.AddTree
 {
     public static class AddTreeUseCase
     {
-        public record Command(int UserId, string Title) : IRequest;
-        internal class Handler : IRequestHandler<Command>
+        public record Command(int UserId, string Title, string Content) : IRequest<int>;
+        internal class Handler : IRequestHandler<Command, int>
         {
             private readonly IRepository repository;
 
@@ -15,15 +15,18 @@ namespace SheepHappens.Api.UseCases.Trees.Commands.AddTree
             {
                 this.repository = repository;
             }
-            public async Task Handle(Command request, CancellationToken cancellationToken)
+            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
             {
-                await repository.Trees.AddAsync(new Tree
+                var newTree = new Tree
                 {
                     UserId = request.UserId,
                     Title = request.Title,
-                }, cancellationToken); 
+                    Content = request.Content,
+                };
+                await repository.Trees.AddAsync(newTree , cancellationToken); 
 
                 await repository.SaveChangesAsync(cancellationToken);
+                return newTree.Id;
             }
         }
     }

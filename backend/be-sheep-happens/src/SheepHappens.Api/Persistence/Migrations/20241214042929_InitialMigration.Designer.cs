@@ -12,7 +12,7 @@ using SheepHappens.Api.Persistence;
 namespace SheepHappens.Api.Persistence.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20241213223555_InitialMigration")]
+    [Migration("20241214042929_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -72,6 +72,11 @@ namespace SheepHappens.Api.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text")
@@ -99,8 +104,7 @@ namespace SheepHappens.Api.Persistence.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("text")
                         .HasColumnName("login");
 
                     b.HasKey("Id");

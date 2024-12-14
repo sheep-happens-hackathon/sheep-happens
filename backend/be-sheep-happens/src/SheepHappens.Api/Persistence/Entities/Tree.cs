@@ -9,6 +9,8 @@ namespace SheepHappens.Api.Persistence.Entities
         public int Id { get; set; }
         [Column("title")]
         public string Title { get; set; } = string.Empty;
+        [Column("content")]
+        public string Content { get; set; } = string.Empty;
         [Column("user_id")]
         public int UserId { get; set; }
 

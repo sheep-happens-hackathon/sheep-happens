@@ -11,8 +11,6 @@ namespace SheepHappens.Api.Persistence.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Login).HasMaxLength(128);
-
             builder
                 .HasMany(x => x.Trees)
                 .WithOne(x => x.User)
