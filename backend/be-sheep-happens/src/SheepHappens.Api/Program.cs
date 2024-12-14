@@ -3,6 +3,7 @@ using SheepHappens.Api;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterDbContext(builder.Configuration);
+builder.Services.AddDependencyInjection();
 
 builder.Services.AddControllers();
 
