@@ -21,12 +21,7 @@ export function TreeDetails() {
 function useTree() {
   const { treeId } = useParams();
 
-  useEffect(() => {
-    console.log('tree id', treeId);
-  }, [treeId]);
-
   const { treeDescriptions } = useTreeStore();
-  console.log(treeDescriptions, treeId);
 
   const tree = useMemo(
     () => treeDescriptions.find((t) => t.id.toString() === treeId),
