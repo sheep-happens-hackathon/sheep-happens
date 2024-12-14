@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SheepHappens.Api.Common.Interfaces;
-using SheepHappens.Api.Persistence.Entities;
 using SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId.Dtos;
 
 namespace SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId

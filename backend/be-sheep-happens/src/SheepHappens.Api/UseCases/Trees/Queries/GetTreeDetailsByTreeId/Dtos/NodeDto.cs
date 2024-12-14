@@ -1,7 +1,4 @@
-﻿using SheepHappens.Api.Persistence.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId.Dtos
+﻿namespace SheepHappens.Api.UseCases.Trees.Queries.GetTreeDetailsByTreeId.Dtos
 {
     public class NodeDto
     {
