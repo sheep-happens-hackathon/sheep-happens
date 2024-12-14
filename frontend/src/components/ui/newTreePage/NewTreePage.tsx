@@ -42,7 +42,7 @@ export function NewTreePage() {
       content: response.content,
       isFinal: false,
     };
-    await DAO.createNode(newNode);
+    await DAO.createNode(newTreeId, [newNode]);
     navigate(`/trees/${newTreeId}`);
   };
 

@@ -9,4 +9,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5121', // Your backend URL
+        changeOrigin: true, // Changes the origin of the host header to the target URL
+      },
+    },
+  },
 });
