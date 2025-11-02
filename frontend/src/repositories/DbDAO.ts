@@ -29,17 +29,33 @@ export class DbDAO implements IDAO {
     return JSON.parse(textTrees);
   }
 
+  // sortNodes(unsortedNodes: Node[]): Node[] {
+  //   let searchedParents = [null]
+  //   let finalNodes: Node[] = [];
+
+  //   while (true) {
+  //     let levelNodes: Node[] = unsortedNodes.filter((node) => node.parentId === searchedParents[0]!);
+  //     if (levelNodes.length === 0) {
+  //       break;
+  //     }
+  //     finalNodes = [...finalNodes, ...levelNodes];
+
+  //   }
+  // }
+
   async getNodes(treeId: number): Promise<Node[]> {
     const rawResponse = await api(`trees/${treeId}`);
     const textNodes = await rawResponse.text();
     const dbNodes = JSON.parse(textNodes) as DbNode[];
-    return dbNodes.map((dbNode) => ({
+    const nodes = dbNodes.map((dbNode) => ({
       id: dbNode.id,
       title: dbNode.title,
       content: dbNode.content,
       parentId: dbNode.parentNodeId,
       isFinal: dbNode.isFinal,
     }));
+    nodes.sort((a, b) => a.id - b.id);
+    return nodes;
   }
 
   async createTree(
